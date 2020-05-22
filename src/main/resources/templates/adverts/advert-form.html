@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <!--    <title>Save Employee</title>-->
+</head>
+
+<body>
+
+<div class="container">
+
+    <h3>Объявления о продаже недвижимости</h3>
+    <hr>
+
+    <p class="h4 mb-4">Добавить новое объявление в систему</p>
+
+        <form action="#" th:action="@{/adverts/save}"
+              th:object="${advert}" method="POST" enctype="multipart/form-data">
+
+            <!-- Add hidden form field to handle update -->
+            <input type="hidden" th:field="*{id}" />
+
+            <input type="text" th:field="*{title}"
+                   class="form-control mb-4 col-4" placeholder="Название">
+
+            <input type="file" name="file_upload"
+                   class="form-control mb-4 col-4" placeholder="Изображение">
+
+            <input type="text" th:field="*{price}"
+                   class="form-control mb-4 col-4" placeholder="Цена">
+
+            <input type="text" th:field="*{description}"
+                   class="form-control mb-4 col-4" placeholder="Описание">
+
+
+
+    <!--        <div class="form-group">-->
+    <!--            <label for="file_upload">Фото</label>-->
+    <!--            <input type="file" id="file_upload" name="file_upload">-->
+    <!--        </div>-->
+
+            <button type="submit" class="btn btn-info col-2">Добавить</button>
+
+        </form>
+
+
+<a th:href="@{/adverts/list}">Назад к списку объявлений</a>
+
+</div>
+</body>
+
+</html>
