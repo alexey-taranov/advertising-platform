@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -16,16 +17,19 @@ public class Advert {
     @Column(name = "id")
     private Integer id;
 
-    @NotBlank(message = "Заполни поле")
+    @NotBlank(message = "Заполните поле Название.")
+    @Length(max = 20, message = "Название слишком большое!")
     @Column(name = "title", nullable = false)
     private String title;
 
     private String filename;
 
+    @NotBlank(message = "Заполните поле Цена.")
     @Column(name = "price", nullable = false)
-    private Double price;
+    private String price;
 
-    @Length(max = 2048, message = "Message too long(more than 2kB)")
+    @NotBlank(message = "Заполните поле Описание.")
+    @Length(max = 2048, message = "Сообщение слишком большое!")
     @Column(name = "description", nullable = false)
     private String description;
 
@@ -36,29 +40,18 @@ public class Advert {
     @JoinColumn(name = "user_id")
     private Account author;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "photo_id")
-    private Photo photo;
-
     public Advert() {
     }
 
-    public Advert(String title, Double price, String description, Account author) {
+    public Advert(String title, String price, String description, Account author) {
         this.title = title;
         this.price = price;
         this.description = description;
         this.author = author;
     }
 
-    public Advert(String title, Double price, String description) {
+    public Advert(String title, String price, String description) {
         this.title = title;
-        this.price = price;
-        this.description = description;
-    }
-
-    public Advert(String title, Photo photo, Double price, String description) {
-        this.title = title;
-        this.photo = photo;
         this.price = price;
         this.description = description;
     }
@@ -71,11 +64,11 @@ public class Advert {
         this.id = id;
     }
 
-    public Double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -101,14 +94,6 @@ public class Advert {
 
     public void setFilename(String filename) {
         this.filename = filename;
-    }
-
-    public Photo getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
     }
 
     public Timestamp getAdded() {

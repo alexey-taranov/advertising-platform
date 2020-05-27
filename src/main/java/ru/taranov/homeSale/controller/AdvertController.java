@@ -1,17 +1,17 @@
 package ru.taranov.homeSale.controller;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import ru.taranov.homeSale.entity.Account;
 import ru.taranov.homeSale.entity.Advert;
 import ru.taranov.homeSale.service.AdvertService;
+import ru.taranov.homeSale.service.FileUploadService;
 
-
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -20,13 +20,12 @@ import java.util.List;
 @RequestMapping("/adverts")
 public class AdvertController {
 
-    @Value("${upload.path}")
-    private String uploadPath;
-
     private AdvertService advertService;
+    private FileUploadService fileUploadService;
 
-    public AdvertController(AdvertService advertService) {
+    public AdvertController(AdvertService advertService, FileUploadService fileUploadService) {
         this.advertService = advertService;
+        this.fileUploadService = fileUploadService;
     }
 
     @GetMapping("/list")
@@ -38,13 +37,10 @@ public class AdvertController {
     }
 
     @RequestMapping("/showFormForAdd")
-    public String showFormForAdd(MultipartFile file, Model theModel) throws IOException {
+    public String showFormForAdd(Model theModel) {
 
         Advert theAdvert = new Advert();
         theModel.addAttribute("advert", theAdvert);
-
-//        Photo filemode = new Photo(file.getOriginalFilename(), file.getContentType(), file.getBytes());
-//        photoRepository.save(filemode);
 
         return "adverts/advert-form";
     }
@@ -78,13 +74,21 @@ public class AdvertController {
     }
 
     @PostMapping("/save")
-    public String saveAdvert(@AuthenticationPrincipal Account user,@ModelAttribute("advert") Advert theAdvert) throws Exception {
+    public String saveAdvert(@RequestParam("file") MultipartFile file,
+                             @AuthenticationPrincipal Account user,
+                             @Valid @ModelAttribute("advert") Advert theAdvert,
+                             BindingResult bindingResult) throws IOException {
+        if (bindingResult.hasErrors()) {
+            return "adverts/advert-form";
+        } else {
+            String filepath = fileUploadService.upload(file);
+            theAdvert.setFilename(filepath);
 
-        advertService.save(user, theAdvert);
+            advertService.save(user, theAdvert);
+        }
 
         return "redirect:/adverts/list";
     }
-
 
     @GetMapping("/delete")
     public String delete(@RequestParam("advertId") int theId) {

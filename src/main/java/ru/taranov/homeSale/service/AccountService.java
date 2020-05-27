@@ -4,7 +4,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.taranov.homeSale.dao.AccountRepository;
+import ru.taranov.homeSale.repo.AccountRepository;
 
 @Service
 public class AccountService implements UserDetailsService {

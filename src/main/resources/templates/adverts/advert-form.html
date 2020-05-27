@@ -9,7 +9,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
-    <!--    <title>Save Employee</title>-->
 </head>
 
 <body>
@@ -21,39 +20,32 @@
 
     <p class="h4 mb-4">Добавить новое объявление в систему</p>
 
-        <form action="#" th:action="@{/adverts/save}"
-              th:object="${advert}" method="POST" enctype="multipart/form-data">
+    <form action="#" th:action="@{/adverts/save}"
+          th:object="${advert}" method="POST" enctype="multipart/form-data">
 
-            <!-- Add hidden form field to handle update -->
-            <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{id}" />
 
-            <input type="text" th:field="*{title}"
-                   class="form-control mb-4 col-4" placeholder="Название">
+        <input type="text" th:field="*{title}"
+               class="form-control mb-4 col-4" placeholder="Название"/>
+            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="alert alert-danger col-4" >Title Error</p>
 
-            <input type="file" name="file_upload"
-                   class="form-control mb-4 col-4" placeholder="Изображение">
+        <input type="file" name="file"/>
+        <input type="hidden" th:field="*{filename}" />
 
-            <input type="text" th:field="*{price}"
-                   class="form-control mb-4 col-4" placeholder="Цена">
+        <input type="text" th:field="*{price}"
+               class="form-control mb-4 col-4" placeholder="Цена">
+        <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="alert alert-danger col-4" >Price Error</p>
 
-            <input type="text" th:field="*{description}"
-                   class="form-control mb-4 col-4" placeholder="Описание">
+        <input type="text" th:field="*{description}"
+               class="form-control mb-4 col-4" placeholder="Описание">
+        <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="alert alert-danger col-4" >Description Error</p>
 
+        <button type="submit" class="btn btn-info col-2">Добавить</button>
 
+    </form>
 
-    <!--        <div class="form-group">-->
-    <!--            <label for="file_upload">Фото</label>-->
-    <!--            <input type="file" id="file_upload" name="file_upload">-->
-    <!--        </div>-->
-
-            <button type="submit" class="btn btn-info col-2">Добавить</button>
-
-        </form>
-
-
-<a th:href="@{/adverts/list}">Назад к списку объявлений</a>
+    <a th:href="@{/adverts/list}">Назад к списку объявлений</a>
 
 </div>
 </body>
-
 </html>

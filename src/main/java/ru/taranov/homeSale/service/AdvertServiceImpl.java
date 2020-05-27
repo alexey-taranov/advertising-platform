@@ -2,10 +2,10 @@ package ru.taranov.homeSale.service;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
-import ru.taranov.homeSale.dao.AdvertRepository;
+import ru.taranov.homeSale.repo.AdvertRepository;
 import ru.taranov.homeSale.entity.Account;
 import ru.taranov.homeSale.entity.Advert;
-import ru.taranov.homeSale.controller.AdvertNotFoundException;
+import ru.taranov.homeSale.exception.AdvertNotFoundException;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

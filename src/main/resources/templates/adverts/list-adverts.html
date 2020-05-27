@@ -32,7 +32,6 @@
         <button class="btn btn-success mb-3" type="submit">Поиск</button>
     </form>
 
-
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
@@ -49,7 +48,11 @@
         <tr th:each="tempAdvert : ${adverts}">
 
             <td th:text="${tempAdvert.title}" />
-            <td th:text="${tempAdvert.photo}" />
+
+            <td>
+                <img th:src="@{${'/images/' + tempAdvert.filename}}" th:width="200" />
+            </td>
+
             <td th:text="${tempAdvert.price}" />
             <td th:text="${tempAdvert.description}" />
             <td th:text="${tempAdvert.added}" />
@@ -64,6 +67,5 @@
     </form>
 
 </div>
-
 </body>
 </html>

@@ -1,4 +1,4 @@
-package ru.taranov.homeSale.dao;
+package ru.taranov.homeSale.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.taranov.homeSale.entity.Advert;
