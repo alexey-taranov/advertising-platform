@@ -18,7 +18,6 @@ target/
 *.iws
 *.iml
 *.ipr
-*.md
 .class
 *.jar
 target
